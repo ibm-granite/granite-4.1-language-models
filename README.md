@@ -1,50 +1,44 @@
 <p align="center">
-  <img src="figures/granite-4_0-language-models-3x-v1.png" />
+  <img src="figures/granite-4_1-language-models-3x-v1.png" />
 </p>
 
 <p align="center">
-  :hugs: <a href="https://huggingface.co/collections/ibm-granite/granite-40-language-models-6811a18b820ef362d9e5a82c">HuggingFace Collection</a>&nbsp | 
-  :speech_balloon: <a href="https://github.com/orgs/ibm-granite/discussions">Discussions Page</a>&nbsp | 📘 <a href="https://www.ibm.com/granite/docs/">IBM Granite Docs</a>
+  :hugs: <a href="https://huggingface.co/collections/ibm-granite/granite-41-language-models">HuggingFace Collection</a>&nbsp | :hugs <a href=https://huggingface.co/blog/ibm-granite/granit-4-1">HuggingFace Technical Blog</a>
+  :speech_balloon: <a href="https://github.com/orgs/ibm-granite/discussions">Discussions Page</a>&nbsp | 📘 <a href="https://www.ibm.com/granite/docs/">IBM Granite Docs </a>
 <br>
 
 ---
 ## Overview
-Granite 4.0 language models are lightweight, state-of-the-art open foundation models that natively support multilingual capabilities, a wide range of coding tasks—including fill-in-the-middle (FIM) code completion—retrieval-augmented generation (RAG), tool usage, and structured JSON output.
+Granite 4.1 language models are a family of state-of-the-art open foundation models featuring dense decoder-only architectures in three sizes — 3B, 8B, and 30B. They natively support multilingual capabilities, a wide range of coding tasks, retrieval-augmented generation (RAG), tool usage, and structured JSON output.
 
-Our models are developed using a combination of advanced techniques such as structured chat formatting, supervised fine-tuning, reinforcement learning–based model alignment, and model merging. Granite 4.0 features significantly improved *instruction-following* and *tool-calling* capabilities, making it highly effective for enterprise applications and an ideal choice for deployment in environments with constrained compute resources.
+Our models are trained from scratch on approximately 15 trillion tokens through a five-phase strategy designed to progressively refine data quality and model capabilities. The first two phases cover pre-training proper — establishing broad language understanding before pivoting toward stronger math and code reasoning. Phases 3 and 4 transition into mid-training with high-quality data annealing, blending in chain-of-thought reasoning, synthetic instruction data, and curated web content. The fifth and final phase performs long-context extension (LCE), scaling the context window up to 512K tokens through a staged process.
 
-All models are publicly released under the Apache 2.0 license, allowing free use for both research and commercial purposes. The data curation and training processes were specifically designed for enterprise scenarios and customization, incorporating governance, risk, and compliance (GRC) evaluations alongside IBM’s standard data clearance and document quality review procedures.
+All models are publicly released under the Apache 2.0 license, allowing free use for both research and commercial purposes. The data curation and training processes were specifically designed for enterprise scenarios and customization, incorporating governance, risk, and compliance (GRC) evaluations alongside IBM's standard data clearance and document quality review procedures.
 
-The initial release of the Granite 4.0 models included three sizes—micro, tiny, and small—built on dense, dense-hybrid, and mixture-of-experts (MoE) hybrid architectures. Additional model sizes have been added gradually. We provide both base models (checkpoints after pretraining) and instruct models (checkpoints fine-tuned for dialogue, instruction following, helpfulness, and safety).
+We provide both base models (checkpoints after pre-training) and instruct models (checkpoints fine-tuned for dialogue, instruction following, helpfulness, and safety).
 
-Core evaluation results for all model variants are provided on their respective model cards, and a more comprehensive extended evaluation is available [here](URL).
-
-<!-- Comprehensive evaluation results for all model variants, as well as other relevant information will be available in Granite 4.0 Language Models technical report. -->
+<!-- Comprehensive evaluation results for all model variants, as well as other relevant information will be available in Granite 4.1 Language Models technical report. -->
 
 ## How to Use our Models?
 To use any of our models, pick an appropriate `model_path` from:
-1. `iibm-granite/granite-4.0-micro-base`
-2. `ibm-granite/granite-4.0-micro`
-3. `ibm-granite/granite-4.0-h-micro-base`
-4. `ibm-granite/granite-4.0-h-micro`
-5. `ibm-granite/granite-4.0-h-tiny-base`
-6. `ibm-granite/granite-4.0-h-tiny`
-7. `ibm-granite/granite-4.0-h-small-base`
-8. `ibm-granite/granite-4.0-h-small`
-9. `ibm-granite/granite-4.0-8b-base`
-10. `ibm-granite/granite-4.0-8b`
+1. `ibm-granite/granite-4.1-3b-base`
+2. `ibm-granite/granite-4.1-3b`
+3. `ibm-granite/granite-4.1-8b-base`
+4. `ibm-granite/granite-4.1-8b`
+5. `ibm-granite/granite-4.1-30b-base`
+6. `ibm-granite/granite-4.1-30b`
 
 ## Inference Examples
 
 ### Basic Inference
-This is a simple example of how to use Granite-4.0-H-Small model.
+This is a simple example of how to use Granite-4.1-3B model.
 
 ```python
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 device = "auto"
-model_path = "ibm-granite/granite-4.0-h-small"
+model_path = "ibm-granite/granite-4.1-3b"
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 # drop device_map if running on CPU
 model = AutoModelForCausalLM.from_pretrained(model_path, device_map=device)
@@ -71,7 +65,7 @@ print(output)
 ### Tool-calling capabilities for AI agents
 Agentic tool-calling is shaping the future of AI agents, enabling seamless integration of powerful back-end systems into agent-driven workflows. These trajectories often involve multiple tool calls, handling execution responses, and multi-turn user interactions. While agent frameworks orchestrate long-horizon tasks, LLMs must provide the foundation — including standard tool formats, robust tool-call handling (even in edge cases), and support for feeding back execution results. 
 
-The following code example demonstrates how Granite 4.0’s tool-calling capabilities address these needs. In the first user query, the model successfully generates the appropriate tool call because it has access to the necessary tools. In contrast, it produces an apology message for the second query, as the required tooling is unavailable. Since this example does not use an agent framework, tool execution is simulated.
+The following code example demonstrates how Granite 4.1’s tool-calling capabilities address these needs. In the first user query, the model successfully generates the appropriate tool call because it has access to the necessary tools. In contrast, it produces an apology message for the second query, as the required tooling is unavailable. Since this example does not use an agent framework, tool execution is simulated.
 
 ```python
 import torch
@@ -79,7 +73,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 device = "cuda"
 # model_path = ""
-model_path = "ibm-granite/granite-4.0-micro"
+model_path = "ibm-granite/granite-4.1-3b"
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 # drop device_map if running on CPU
 model = AutoModelForCausalLM.from_pretrained(model_path, device_map=device)
@@ -181,7 +175,7 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 device = "cuda"
-model_path = "ibm-granite/granite-4.0-h-tiny" 
+model_path = "ibm-granite/granite-4.1-3b" 
 
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 # drop device_map if running on CPU
@@ -221,7 +215,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 device = "cuda"
 # model_path = ""
-model_path = "ibm-granite/granite-4.0-micro"
+model_path = "ibm-granite/granite-4.1-3b"
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 
 # drop device_map if running on CPU
@@ -257,39 +251,37 @@ output = tokenizer.batch_decode(output)
 print(output[0])
 ```
 
-You can find examples about other capabilities of Granite 4.0 models in our [prompt engineering guide](https://github.com/ibm-granite/granite-4.0-language-models/blob/main/Granite%204.0%20Prompt%20engineering%20guide%20v2.md).
-
 ## How to Download our Models?
-The model of choice (`ibm-granite/granite-4.0-h-small` in this example) can be cloned using:
+The model of choice (`ibm-granite/granite-4.1-8b` in this example) can be cloned using:
 ```shell
-git clone https://https://huggingface.co/ibm-granite/granite-4.0-h-small
+git clone https://https://huggingface.co/ibm-granite/granite-4.1-8b
 ```
 
 ## How to Contribute to this Project?
 Plese check our [Guidelines](/CONTRIBUTING.md) and [Code of Conduct](/CODE_OF_CONDUCT.md) to contribute to our project.
 
 ## Model Cards
-The model cards for each model variant are available in their respective HuggingFace repository. Please visit our collection [here](https://huggingface.co/collections/ibm-granite/granite-40-language-models-6811a18b820ef362d9e5a82c).
+The model cards for each model variant are available in their respective HuggingFace repository. Please visit our collection [here](https://huggingface.co/collections/ibm-granite/granite-41-language-models).
 
 ## License 
-All Granite 4.0 Language Models are distributed under [Apache 2.0](./LICENSE) license.
+All Granite 4.1 Language Models are distributed under [Apache 2.0](./LICENSE) license.
 
 ## Disclosures
-Please find disclosures information [here](https://github.com/ibm-granite/granite-4.0-language-models/tree/main/disclosures).
+Please find disclosures information [here](https://github.com/ibm-granite/granite-1.0-language-models/tree/main/disclosures).
 
 ## Would you like to provide feedback?
-Please let us know your comments about our family of language models by visiting our [collection](https://huggingface.co/collections/ibm-granite/granite-40-language-models-6811a18b820ef362d9e5a82c). Select the repository of the model you would like to provide feedback about. Then, go to *Community* tab, and click on *New discussion*. Alternatively, you can also post any questions/comments on our [github discussions page](https://github.com/orgs/ibm-granite/discussions).
+Please let us know your comments about our family of language models by visiting our [collection](https://huggingface.co/collections/ibm-granite/granite-41-language-models). Select the repository of the model you would like to provide feedback about. Then, go to *Community* tab, and click on *New discussion*. Alternatively, you can also post any questions/comments on our [github discussions page](https://github.com/orgs/ibm-granite/discussions).
 
 ## Citation
 If you find granite models useful, please cite our work as follows:
 
 ```
-@misc{granite2025,
+@misc{granite2026,
   author       = {{IBM Research}},
-  title        = {Granite 4.0 Language Models},
-  year         = {2025},
-  howpublished = {\url{https://github.com/ibm-granite/granite-4.0-language-models}},
-  note         = {Accessed: 2025-10-01}
+  title        = {Granite 4.1 Language Models},
+  year         = {2026},
+  howpublished = {\url{https://huggingface.co/blog/ibm-granite/granit-4-1}},
+  note         = {Accessed: 2026-04-28}
 }
 ```
 
