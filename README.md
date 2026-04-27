@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  :hugs: <a href="https://huggingface.co/collections/ibm-granite/granite-41">HuggingFace Collection</a>&nbsp | :hugs <a href="https://huggingface.co/blog/ibm-granite/granit-4-1">HuggingFace Technical Blog</a> | :speech_balloon: <a href="https://github.com/orgs/ibm-granite/discussions">Discussions Page</a>&nbsp | 📘 <a href="https://www.ibm.com/granite/docs/">IBM Granite Docs </a>
+  :hugs: <a href="https://huggingface.co/collections/ibm-granite/granite-41">HuggingFace Collection</a>&nbsp | :hugs: <a href="https://huggingface.co/blog/ibm-granite/granit-4-1">HuggingFace Technical Blog</a> | :speech_balloon: <a href="https://github.com/orgs/ibm-granite/discussions">Discussions Page</a>&nbsp | 📘 <a href="https://www.ibm.com/granite/docs/">IBM Granite Docs </a>
 <br>
 
 ---
