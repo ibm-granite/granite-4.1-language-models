@@ -253,7 +253,7 @@ print(output[0])
 ## How to Download our Models?
 The model of choice (`ibm-granite/granite-4.1-8b` in this example) can be cloned using:
 ```shell
-git clone https://https://huggingface.co/ibm-granite/granite-4.1-8b
+git clone https://huggingface.co/ibm-granite/granite-4.1-8b
 ```
 
 ## How to Contribute to this Project?
